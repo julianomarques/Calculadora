@@ -145,7 +145,15 @@ class _MyAppState extends State<MyApp> {
                     style: const TextStyle(fontSize: 48),
                   ),
                 ),
-                Text(''),
+                TextButton(
+                  child: Text(
+                    ':)',
+                    style: const TextStyle(fontSize: 48),
+                  ),
+                  onPressed: () {
+                    //
+                  },
+                ),
                 Text(''),
                 Text(
                   '<=',

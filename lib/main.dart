@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +14,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String numero = 'numero';
+  String numero = '0';
+  double primeironumero = 0.0;
+  String operacao = '';
+  // String resultadoPastes = '';
+
   void calcular(String tecla) {
     switch (tecla) {
       case '0':
@@ -27,7 +33,68 @@ class _MyAppState extends State<MyApp> {
       case '9':
         setState(() {
           numero += tecla;
+          numero = numero.replaceAll(',', '.');
+
+          if (numero.contains('.')) {
+            // double numerodouble = double.parse(numero);
+            //  numero = numerodouble.toString();
+          } else {
+            int numeroInt = int.parse(numero);
+            numero = numeroInt.toString();
+          }
+          numero = numero.replaceAll('.', ',');
         });
+        break;
+
+      case '+':
+      case '-':
+      case 'X':
+      case '/':
+        operacao = tecla;
+        numero = numero.replaceAll(',', '.');
+        primeironumero = double.parse(numero);
+        numero = numero.replaceAll('.', ',');
+        numero = '0';
+        break;
+
+      case '=':
+        double resultado = 0.0;
+        if (operacao == '/') {
+          if (double.parse(numero) * 1 == 0) {
+            print('erro: Divisao por Zero');
+            return;
+          }
+        }
+
+        if (operacao == '+') {
+          resultado = primeironumero + double.parse(numero);
+        }
+        if (operacao == '-') {
+          resultado = primeironumero - double.parse(numero);
+        }
+        if (operacao == 'X') {
+          resultado = primeironumero * double.parse(numero);
+        }
+        if (operacao == '/') {
+          resultado = primeironumero / double.parse(numero);
+        }
+        String resultadoString = resultado.toString();
+        //3  -  0
+        // parte1 3 parte2 0
+
+        List<String> resultadoPartes = resultadoString.split('.');
+
+        if (int.parse(resultadoPartes[1]) * 1 == 0) {
+          int resultadoformatado = int.parse(resultadoPartes[0]);
+
+          setState(() {
+            numero = int.parse(resultadoPartes[0]).toString();
+          });
+        } else {
+          setState(() {
+            numero = resultado.toString();
+          });
+        }
         break;
 
       case 'AC':
@@ -35,6 +102,13 @@ class _MyAppState extends State<MyApp> {
           numero = '0';
         });
 
+        break;
+      case '<=':
+        setState(() {
+          if (numero.length > 0) {
+            numero = numero.substring(0, numero.length - 1);
+          }
+        });
         break;
       default:
         numero += tecla;

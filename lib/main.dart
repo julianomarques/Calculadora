@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_is_empty
+
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -103,6 +105,7 @@ class _MyAppState extends State<MyApp> {
         });
 
         break;
+
       case '<=':
         setState(() {
           if (numero.length > 0) {
@@ -110,6 +113,7 @@ class _MyAppState extends State<MyApp> {
           }
         });
         break;
+
       default:
         numero += tecla;
         break;
@@ -119,6 +123,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Center(child: Text('Calculadora')),
@@ -155,9 +160,15 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 Text(''),
-                Text(
-                  '<=',
-                  style: TextStyle(fontSize: 48),
+                GestureDetector(
+                  onTap: () => calcular(''),
+                  child: GestureDetector(
+                    onTap: () => calcular('<='),
+                    child: Image.asset(
+                      'assets/images/back.png',
+                      width: 72,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -234,9 +245,17 @@ class _MyAppState extends State<MyApp> {
               children: [
                 GestureDetector(
                   onTap: () => calcular('1'),
-                  child: Text(
-                    '1',
-                    style: TextStyle(fontSize: 48),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Color.fromARGB(255, 22, 72, 236)),
+                    child: Center(
+                        child: Text(
+                      '1',
+                      style: TextStyle(fontSize: 48, color: Colors.white),
+                    )),
                   ),
                 ),
                 GestureDetector(
@@ -287,12 +306,19 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => calcular('+'),
-                  child: Text(
-                    '+',
-                    style: TextStyle(fontSize: 48),
-                  ),
-                ),
+                    onTap: () => calcular('+'),
+                    child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.black),
+                        child: Center(
+                          child: Text(
+                            '+',
+                            style: TextStyle(fontSize: 48, color: Colors.white),
+                          ),
+                        ))),
               ],
             ),
           ],
